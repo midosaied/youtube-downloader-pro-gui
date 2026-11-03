@@ -67,6 +67,10 @@ def _pip_install(pip_name: str) -> bool:
     plain install -> --user -> --break-system-packages (PEP 668 systems,
     common on modern Debian/Ubuntu) -> both combined.
     """
+    if getattr(sys, "frozen", False):
+        # Packaged .exe: sys.executable is the app itself, not Python, so
+        # "python -m pip" would relaunch the app. Everything is bundled anyway.
+        return False
     attempts = [
         [sys.executable, "-m", "pip", "install", "--upgrade", "--quiet", pip_name],
         [sys.executable, "-m", "pip", "install", "--upgrade", "--quiet", "--user", pip_name],
@@ -156,6 +160,9 @@ def ensure_ytdlp_up_to_date(status_cb: Optional[Callable[[str], None]] = None, f
             status_cb(msg)
         else:
             print(msg)
+
+    if getattr(sys, "frozen", False):
+        return  # packaged build: yt-dlp is bundled, update by downloading a newer release
 
     try:
         old_version = getattr(importlib.import_module("yt_dlp.version"), "__version__", "?")
@@ -299,7 +306,7 @@ def try_auto_install_ffmpeg(status_cb: Optional[Callable[[str], None]] = None) -
 
     try:
         emit("Trying to fetch a portable copy via pip (static-ffmpeg)...")
-        if _pip_install("static-ffmpeg"):
+        if getattr(sys, "frozen", False) or _pip_install("static-ffmpeg"):
             importlib.invalidate_caches()
             from static_ffmpeg import run as _static_ffmpeg_run
             ffmpeg_path, _ffprobe_path = _static_ffmpeg_run.get_or_fetch_platform_executables_else_raise()
@@ -1583,7 +1590,7 @@ def main():
             missing.append("-q/--quality")
         if missing:
             print(f"Error: -u/--urls was given but {', '.join(missing)} is also required for headless mode.")
-            print("Example: python ytdlp_pro.py -u https://youtu.be/xxxx -f audio -q 320")
+            print("Example: python youtube_downloader_pro.py -u https://youtu.be/xxxx -f audio -q 320")
             sys.exit(1)
         run_headless(args)
     else:
