@@ -20,6 +20,10 @@ A modern desktop GUI (built with CustomTkinter) for downloading audio and video 
 - Tkinter (bundled with Python on Windows/macOS; on Linux: `sudo apt install python3-tk`)
 - ffmpeg (installed automatically if missing, or install it manually)
 
+  
+## Download (Windows)
+
+Grab the latest `YouTubeDownloaderPro.exe` from the [Releases page](https://github.com/midosaied/youtube-downloader-pro-gui/releases/latest). No Python needed.
 ## Installation
 
 ```bash
