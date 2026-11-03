@@ -23,8 +23,8 @@ A modern desktop GUI (built with CustomTkinter) for downloading audio and video 
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/youtube-downloader-pro.git
-cd youtube-downloader-pro
+git clone https://github.com/midosaied/youtube-downloader-pro-gui.git
+cd youtube-downloader-pro-gui
 pip install -r requirements.txt
 ```
 
