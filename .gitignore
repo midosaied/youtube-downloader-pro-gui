@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# App runtime files
+youtube_downloader.log
+*.log
+*.part
+*.ytdl
+
+# Downloads (never commit media)
+YouTube/
+*.mp3
+*.m4a
+*.mp4
+*.webm
+*.mkv
+*.opus
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
